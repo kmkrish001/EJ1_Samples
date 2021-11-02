@@ -1220,6 +1220,8 @@
             if (this.suggestionListItems.length == 0) {
                 this.suggestionListItems.push(this.model.emptyResultText);
                 this.noresult = true;
+            } else if (this.suggestionListItems[0] == this.model.emptyResultText) {
+                this.noresult = true;
             }
             else this.noresult = false;
         },
