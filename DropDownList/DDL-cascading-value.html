@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential Studio for JavaScript : DropDownList - Multi Select Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="https://cdn.syncfusion.com/19.3.0.53/js/web/flat-azure/ej.web.all.min.css" rel="stylesheet" />
+	<!-- Essential Studio for JavaScript  script references -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+    <script src="https://cdn.syncfusion.com/js/assets/external/jsrender.min.js"></script>
+	<!--<![endif]--> 
+	<!-- <script src="ej.widget.all.min.js" type="text/javascript"></script>	 -->
+    <script src="scripts/ej.core.js"></script>
+    <script src="scripts/ej.data.js"></script>
+    <script src="scripts/ej.scroller.js"></script>
+    <script src="scripts/ej.draggable.js"></script>
+    <script src="scripts/ej.globalize.js"></script>
+    <script src="scripts/ej.button.js"></script>
+    <script src="scripts/ej.togglebutton.js"></script>
+    <script src="scripts/ej.checkbox.js"></script>
+    <script src="scripts/ej.dialog.js"></script>
+    <script src="scripts/ej.dropdownlist.js"></script>
+</head>
+<body>
+ <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <input class="e-btn" id="btnOpen" value="Open dialog" />
+                <div class="control">
+                    <div id="basicDialog" title="Edit Dialog">
+                      <div class="cascadding">
+                        <div id="control" >
+							<span class="txt">Select Location</span>
+							<input id="ddlDQLoction" type="text" />
+                        </div> 
+                        <div id="binding">
+							<span class="txt">Select Group</span>
+							<input id="ddlDQTeamName" type="text" />
+                        </div> 
+                    </div>
+					<br/>					
+		            <button onclick="back()">Back</button>
+                    </div>
+					
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var target;
+        $(function () {
+            // declaration
+            var groups = [
+          { parentId: 'a', text: "Group A" },
+          { parentId: 'b', text: "Group B" },
+          { parentId: 'c', text: "Group C" },
+          { parentId: 'd', text: "Group D" },
+          { parentId: 'e', text: "Group E" }]
+            //first level child
+            var countries = [{ value: 11, parentId: 'a', text: "Algeria", sprite: "flag-dz" },
+           { value: 12, parentId: 'a', text: "Armenia", sprite: "flag-am" },
+           { value: 13, parentId: 'a', text: "Bangladesh", sprite: "flag-bd" },
+           { value: 14, parentId: 'a', text: "Cuba", sprite: "flag-cu" },
+           { value: 15, parentId: 'b', text: "Denmark", sprite: "flag-dk" },
+           { value: 16, parentId: 'b', text: "Egypt", sprite: "flag-eg" },
+           { value: 17, parentId: 'c', text: "Finland", sprite: "flag-fi" },
+           { value: 18, parentId: 'c', text: "India", sprite: "flag-in" },
+           { value: 19, parentId: 'c', text: "Malaysia", sprite: "flag-my" },
+           { value: 20, parentId: 'd', text: "New Zealand", sprite: "flag-nz" },
+           { value: 21, parentId: 'd', text: "Norway", sprite: "flag-no" },
+           { value: 22, parentId: 'd', text: "Poland", sprite: "flag-pl" },
+           { value: 23, parentId: 'e', text: "Romania", sprite: "flag-ro" },
+           { value: 24, parentId: 'e', text: "Singapore", sprite: "flag-sg" },
+           { value: 25, parentId: 'e', text: "Thailand", sprite: "flag-th" },
+           { value: 26, parentId: 'e', text: "Ukraine", sprite: "flag-ua" }]
+           $("#basicDialog").ejDialog({
+                width: 700,
+                minWidth: 410,
+                minHeight: 300,
+                close: "onDialogClose",
+                showOnInit:false
+            });
+            $("#btnOpen").ejButton({ size: "medium", click: "onOpen", type: "button", height: 30, width: 172 });           
+		   $('#ddlDQLoction').ejDropDownList({
+                dataSource: groups,
+                fields: { value: "parentId",text:"text" },
+                cascadeTo: 'ddlDQTeamName',
+                change: "onChange",
+				width:"100%"
+            });
+            $('#ddlDQTeamName').ejDropDownList({
+                dataSource: countries,
+                enabled: false,
+				width:"100%"
+            });
+        });
+		 function onDialogClose(args) {
+            $("#btnOpen").show();
+        }
+        function onOpen() {
+            $("#btnOpen").hide();
+            $("#basicDialog").ejDialog("open");
+			$("#ddlDQLoction").ejDropDownList("selectItemByValue","c");
+			//$("#ddlDQLoction").ejDropDownList({value:"c"});
+        }
+        function onChange() {
+            var ctry = $('#ddlDQLoction').data("ejDropDownList");
+            ctry.element.val("");
+        }
+		function back()
+		{
+		   $("#basicDialog").ejDialog("close");
+		}
+		
+    </script>
+</body>
+</html>
